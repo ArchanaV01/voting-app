@@ -29,7 +29,8 @@ class AdminPage extends React.Component {
     // e.preventDefault();
     var self = this;
     console.log("passeddd", this.props.location.state);
-    self.setState({ user: this.props.location.state });
+    this.state.user = this.props.location.state;
+    // self.setState({ user: this.props.location.state });
     axios
       .get("http://localhost:4000/api/get_candidates", {})
       .then(function (response) {
@@ -58,14 +59,14 @@ class AdminPage extends React.Component {
           </Nav>
         </Navbar>
         <h1>Welcome!!</h1>
-        {this.state.user.voted ? (
+        {this.state.user.vote ? (
           <h1>Voting done</h1>
         ) : (
           <Container style={{ width: "70%" }}>
             {console.log("candidatesabcddddddd", this.state.candidates)}
             <Form
               onSubmit={(e) => {
-                console.log(this.state.voted);
+                console.log("user in voteeeeeeeeeee", this.state.user);
                 e.preventDefault();
                 axios
                   .post("http://localhost:4000/api/vote", {

@@ -41,15 +41,15 @@ router.post("/signin", async (req, res, next) => {
 
 router.post("/vote", async (req, res, next) => {
   try {
-    console.log("voteee", req.body);
+    console.log("voteee", req.body.user);
     const cand = await db.Candidate.findOne({
       candidate: req.body.candidate,
     });
-    // const user = await db.User.findOne({
-    //   username: req.body.user.username,
-    // });
-    // user.voted = cand.id;
-    // user.save();
+    const user = await db.User.findOne({
+      username: req.body.user.username,
+    });
+    user.vote = cand.id;
+    user.save();
     cand.n_of_votes += 1;
 
     //   const valid = await user.comparePassword(req.body.password);
