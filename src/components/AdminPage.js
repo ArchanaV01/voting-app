@@ -27,7 +27,8 @@ class AdminPage extends React.Component {
     // e.preventDefault();
     var self = this;
     console.log("passeddd", this.props.location.state);
-    self.setState({ user: this.props.location.state });
+    // self.setState({ user: this.props.location.state });
+    this.state.user = this.props.location.state;
     axios
       .get("http://localhost:4000/api/get_candidates", {})
       .then(function (response) {
@@ -45,6 +46,15 @@ class AdminPage extends React.Component {
       });
   }
   render() {
+    const history_store = this.props.history;
+    if (!this.state.user) {
+      //   <alert>Please login</alert>;
+      history_store.push({ pathname: "/", state: null });
+      return <div>Please login</div>;
+    } else if (this.state.user.type != 1) {
+      // history_store.push({ pathname: "/", state: null });
+      return <div>Please login with admin credentials</div>;
+    }
     return (
       <div>
         <Navbar className="navbar">
@@ -52,7 +62,13 @@ class AdminPage extends React.Component {
             <Navbar.Brand style={{ color: "white" }}>Voting App</Navbar.Brand>
           </Nav>
           <Nav style={{ float: "right", alignSelf: "right" }}>
-            <Button>Logout</Button>
+            <Button
+              onClick={(event) => {
+                history_store.push({ pathname: "/", state: null });
+              }}
+            >
+              Logout
+            </Button>
           </Nav>
         </Navbar>
         <h1>Welcome Admin!!</h1>

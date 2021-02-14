@@ -48,6 +48,12 @@ class AdminPage extends React.Component {
       });
   }
   render() {
+    const history_store = this.props.history;
+    if (!this.state.user) {
+      //   <alert>Please login</alert>;
+      history_store.push({ pathname: "/", state: null });
+      return <div>Please login</div>;
+    }
     return (
       <div>
         <Navbar className="navbar">
@@ -55,10 +61,16 @@ class AdminPage extends React.Component {
             <Navbar.Brand style={{ color: "white" }}>Voting App</Navbar.Brand>
           </Nav>
           <Nav style={{ float: "right", alignSelf: "right" }}>
-            <Button>Logout</Button>
+            <Button
+              onClick={(event) => {
+                history_store.push({ pathname: "/", state: null });
+              }}
+            >
+              Logout
+            </Button>
           </Nav>
         </Navbar>
-        <h1>Welcome!!</h1>
+        <h1>Welcome {this.state.user.username}!!</h1>
         {this.state.user.vote ? (
           <h1>Voting done</h1>
         ) : (
