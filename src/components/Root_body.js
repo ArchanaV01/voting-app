@@ -31,9 +31,9 @@ class Root_body extends React.Component {
         // console.log(this.)
         // self.props.user = response.data.user.username;
         if (response.data.user.type == 1) {
-          history_store.push("/Admin");
+          history_store.push({ pathname: "/Admin", state: response.data.user });
         } else {
-          history_store.push("/Home");
+          history_store.push({ pathname: "/Home", state: response.data.user });
         }
       })
       .catch(function (error) {

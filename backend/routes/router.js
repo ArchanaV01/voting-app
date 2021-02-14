@@ -45,6 +45,11 @@ router.post("/vote", async (req, res, next) => {
     const cand = await db.Candidate.findOne({
       candidate: req.body.candidate,
     });
+    // const user = await db.User.findOne({
+    //   username: req.body.user.username,
+    // });
+    // user.voted = cand.id;
+    // user.save();
     cand.n_of_votes += 1;
 
     //   const valid = await user.comparePassword(req.body.password);
@@ -57,6 +62,7 @@ router.post("/vote", async (req, res, next) => {
     //     throw new Error();
     //   }
     cand.save();
+    return res.status(200).json({ message: "voted" });
   } catch (err) {
     return next({ status: 400, message: "Invalid Username/Password" });
   }

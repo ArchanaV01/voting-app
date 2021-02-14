@@ -15,8 +15,7 @@ class AdminPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: "",
-      password: "",
+      user: {},
       candidates: [],
     };
     this.onLoad = this.onLoad.bind(this);
@@ -27,7 +26,8 @@ class AdminPage extends React.Component {
 
     // e.preventDefault();
     var self = this;
-    console.log(self.props.user);
+    console.log("passeddd", this.props.location.state);
+    self.setState({ user: this.props.location.state });
     axios
       .get("http://localhost:4000/api/get_candidates", {})
       .then(function (response) {

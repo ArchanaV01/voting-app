@@ -9,13 +9,14 @@ import {
   Nav,
   Button,
   Container,
+  Alert,
 } from "react-bootstrap";
 // const candidates = { a: 2, b: 10, c: 5, d: 12 };
 class AdminPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: "",
+      user: {},
       password: "",
       candidates: [],
       voted: "",
@@ -27,6 +28,8 @@ class AdminPage extends React.Component {
     const history_store = this.props.history;
     // e.preventDefault();
     var self = this;
+    console.log("passeddd", this.props.location.state);
+    self.setState({ user: this.props.location.state });
     axios
       .get("http://localhost:4000/api/get_candidates", {})
       .then(function (response) {
@@ -55,48 +58,54 @@ class AdminPage extends React.Component {
           </Nav>
         </Navbar>
         <h1>Welcome!!</h1>
-
-        <Container style={{ width: "70%" }}>
-          {console.log("candidatesabcddddddd", this.state.candidates)}
-          <Form
-            onSubmit={(e) => {
-              console.log(this.state.voted);
-              e.preventDefault();
-              axios
-                .post("http://localhost:4000/api/vote", {
-                  username: this.state.user,
-                  candidate: this.state.voted,
-                })
-                .then(function (response) {
-                  console.log(response.data.user);
-                })
-                .catch(function (error) {
-                  console.log(error);
-                });
-            }}
-          >
-            <div
-              onChange={(event) => {
-                console.log(event.target.value);
-                this.state.voted = event.target.value;
+        {this.state.user.voted ? (
+          <h1>Voting done</h1>
+        ) : (
+          <Container style={{ width: "70%" }}>
+            {console.log("candidatesabcddddddd", this.state.candidates)}
+            <Form
+              onSubmit={(e) => {
+                console.log(this.state.voted);
+                e.preventDefault();
+                axios
+                  .post("http://localhost:4000/api/vote", {
+                    user: this.state.user,
+                    candidate: this.state.voted,
+                  })
+                  .then(function (response) {
+                    // console.log(response.data.user);
+                    document.getElementById("message").innerHTML =
+                      '<Alert variant="success">Voted!!</Alert>';
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
               }}
             >
-              {
-                (this.items = this.state.candidates.map((item) => (
-                  <Row>
-                    <input
-                      type="radio"
-                      value={item.candidate}
-                      name="selected"
-                    />
-                    {item.candidate}
-                  </Row>
-                )))
-              }
-            </div>
-            <Button type="submit">Vote</Button>
-          </Form>
-        </Container>
+              <div
+                onChange={(event) => {
+                  console.log(event.target.value);
+                  this.state.voted = event.target.value;
+                }}
+              >
+                {
+                  (this.items = this.state.candidates.map((item) => (
+                    <Row>
+                      <input
+                        type="radio"
+                        value={item.candidate}
+                        name="selected"
+                      />
+                      {item.candidate}
+                    </Row>
+                  )))
+                }
+              </div>
+              <Button type="submit">Vote</Button>
+            </Form>
+            <div id="message"></div>
+          </Container>
+        )}
       </div>
     );
   }
