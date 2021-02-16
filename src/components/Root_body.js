@@ -12,7 +12,7 @@ class Root_body extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: "",
+      email: "",
       password: "",
     };
   }
@@ -23,7 +23,7 @@ class Root_body extends React.Component {
     var self = this;
     axios
       .post("http://localhost:4000/api/signin", {
-        username: this.state.user,
+        email: this.state.email,
         password: this.state.password,
       })
       .then(function (response) {
@@ -61,12 +61,12 @@ class Root_body extends React.Component {
                 }}
               >
                 <Form.Group controlId="formBasicEmail">
-                  <Form.Label>User Name</Form.Label>
+                  <Form.Label>Email</Form.Label>
                   <Form.Control
-                    type="text"
-                    placeholder="Enter User Name"
+                    type="email"
+                    placeholder="Enter Email"
                     onChange={(event) => {
-                      this.state.user = event.target.value;
+                      this.state.email = event.target.value;
                     }}
                   />
                 </Form.Group>

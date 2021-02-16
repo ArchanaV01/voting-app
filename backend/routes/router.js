@@ -23,7 +23,7 @@ router.post("/signin", async (req, res, next) => {
   try {
     console.log("signinnnnnnnnnnnn", req.body);
     const user = await db.User.findOne({
-      username: req.body.username,
+      email: req.body.email,
     });
     const valid = await user.comparePassword(req.body.password);
     console.log("valid", valid);
@@ -32,11 +32,11 @@ router.post("/signin", async (req, res, next) => {
         user,
       });
     } else {
-      throw new Error("Invalid Username/Password");
+      throw new Error("Invalid Email/Password");
     }
   } catch (err) {
     return res.status(400).json({
-      message: "Invalid Username/Password",
+      message: "Invalid Email/Password",
     });
     // console.log(err);
     // return next({ status: 400, message: "Invalid Username/Password" });
@@ -56,20 +56,10 @@ router.post("/vote", async (req, res, next) => {
     user.vote = cand.id;
     user.save();
     cand.n_of_votes += 1;
-
-    //   const valid = await user.comparePassword(req.body.password);
-    //   console.log("valid", valid);
-    //   if (valid) {
-    //     return res.status(200).json({
-    //       user,
-    //     });
-    //   } else {
-    //     throw new Error();
-    //   }
     cand.save();
-    return res.status(200).json({ message: "voted" });
+    return res.status(200).json({ message: "voted", user: user });
   } catch (err) {
-    return next({ status: 400, message: "Invalid Username/Password" });
+    return next({ status: 400, message: "Error in voting" });
   }
 });
 

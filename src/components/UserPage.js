@@ -48,6 +48,8 @@ class UserPage extends React.Component {
       });
   }
   render() {
+    var self = this;
+    console.log("renderr", self.state.user);
     const history_store = this.props.history;
     if (!this.state.user) {
       //   <alert>Please login</alert>;
@@ -86,9 +88,21 @@ class UserPage extends React.Component {
                     candidate: this.state.voted,
                   })
                   .then(function (response) {
-                    // console.log(response.data.user);
-                    document.getElementById("message").innerHTML =
-                      '<Alert variant="success">Voted!!</Alert>';
+                    console.log(
+                      "response.dataaa",
+                      response.data,
+                      "userrrrrrrrr",
+                      response.data.user
+                    );
+                    self.state.user = response.data.user;
+                    self.props.location.state = response.data.user;
+                    self.props.history.push({
+                      pathname: "/Home",
+                      state: response.data.user,
+                    });
+                    console.log("props.stateee", self.props.location.state);
+                    // document.getElementById("message").innerHTML =
+                    //   '<Alert variant="success">Voted!!</Alert>';
                   })
                   .catch(function (error) {
                     console.log(error);
@@ -111,12 +125,6 @@ class UserPage extends React.Component {
                         label={item.candidate}
                         value={item.candidate}
                       />
-                      {/* <input
-                        type="radio"
-                        value={item.candidate}
-                        name="selected"
-                      />
-                      {item.candidate} */}
                     </div>
                   )))
                 }

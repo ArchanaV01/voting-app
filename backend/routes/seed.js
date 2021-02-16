@@ -11,10 +11,20 @@ mongoose.connect(process.env.DB_ACCESS, {
 const db = require("../models");
 
 const users = [
-  { username: "username", password: "password", type: 0 },
-  { username: "kelvin", password: "password", type: 1 },
-  { username: "user", password: "1234", type: 0 },
-  { username: "admin", password: "1234", type: 1 },
+  {
+    email: "username@abc.com",
+    username: "username",
+    password: "password",
+    type: 0,
+  },
+  {
+    email: "kelvin@abc.com",
+    username: "kelvin",
+    password: "password",
+    type: 1,
+  },
+  { email: "user@abc.com", username: "user", password: "1234", type: 0 },
+  { email: "admin@abc.com", username: "admin", password: "1234", type: 1 },
 ];
 
 const candidates = [
