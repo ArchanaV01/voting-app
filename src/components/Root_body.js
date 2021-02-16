@@ -1,7 +1,7 @@
 // import "./App.css";
 // import "./components/AdminPage";
 import React from "react";
-import { Form, Button, Col, Row, Navbar } from "react-bootstrap";
+import { Form, Button, Col, Row, Navbar, Alert } from "react-bootstrap";
 // import AdminPage from "./components/AdminPage";
 // import UserPage from "./components/UserPage";
 import * as axios from "axios";
@@ -37,12 +37,10 @@ class Root_body extends React.Component {
         }
       })
       .catch(function (error) {
-        console.log(error);
+        const message = error["response"]["data"]["message"];
+        document.getElementById("msg").innerHTML =
+          '<Alert variant="danger">' + message + "</Alert>";
       });
-    // const { username, password } = e.;
-    // const { authType } = this.props;
-
-    // this.props.authUser(authType || "login", { username, password });
   }
   render() {
     return (
@@ -50,8 +48,8 @@ class Root_body extends React.Component {
         <header className="App-header"></header>
         <div>
           <Navbar className="navbar">Voting app</Navbar>
-          <Row style={{ float: "center", maxWidth: "100%" }}>
-            <Col sm={6}>
+          <Row style={{ maxWidth: "100%", paddingTop: "5%" }}>
+            <Col sm={6} style={{}}>
               <h2>Ready to vote?</h2>
               <h6>Just login and continue</h6>
             </Col>
@@ -63,10 +61,10 @@ class Root_body extends React.Component {
                 }}
               >
                 <Form.Group controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
+                  <Form.Label>User Name</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Enter email"
+                    placeholder="Enter User Name"
                     onChange={(event) => {
                       this.state.user = event.target.value;
                     }}
@@ -77,15 +75,16 @@ class Root_body extends React.Component {
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     type="password"
-                    placeholder="Password"
+                    placeholder="Enter Password"
                     onChange={(event) => {
                       this.state.password = event.target.value;
                     }}
                   />
                 </Form.Group>
                 <Button variant="primary" type="submit">
-                  Submit
+                  Sign In
                 </Button>
+                <div id="msg" style={{ color: "red" }}></div>
               </Form>
             </Col>
           </Row>

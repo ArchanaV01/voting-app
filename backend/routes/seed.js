@@ -13,6 +13,8 @@ const db = require("../models");
 const users = [
   { username: "username", password: "password", type: 0 },
   { username: "kelvin", password: "password", type: 1 },
+  { username: "user", password: "1234", type: 0 },
+  { username: "admin", password: "1234", type: 1 },
 ];
 
 const candidates = [

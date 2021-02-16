@@ -72,14 +72,18 @@ class AdminPage extends React.Component {
           </Nav>
         </Navbar>
         <h1>Welcome Admin!!</h1>
-
-        <Container style={{ width: "70%" }}>
+        <h2>Stats of votes</h2>
+        <Container style={{ width: "70%", paddingTop: "5%" }}>
           {console.log("candidatesabcddddddd", this.state.candidates)}
+          <Row style={{ fontWeight: "bold" }} className="border">
+            <Col>Candidate Name</Col>
+            <Col>Number of votes</Col>
+          </Row>
           {
             (this.items = this.state.candidates.map((item) => (
-              <Row>
-                <Col key={item.id}>{item.candidate}</Col>{" "}
-                <Col key={item.id}>{item.n_of_votes}</Col>
+              <Row key={item.id} className="border">
+                <Col>{item.candidate}</Col>
+                <Col>{item.n_of_votes}</Col>
               </Row>
             )))
           }

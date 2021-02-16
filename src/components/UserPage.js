@@ -12,7 +12,7 @@ import {
   Alert,
 } from "react-bootstrap";
 // const candidates = { a: 2, b: 10, c: 5, d: 12 };
-class AdminPage extends React.Component {
+class UserPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,7 +21,7 @@ class AdminPage extends React.Component {
       candidates: [],
       voted: "",
     };
-    this.onLoad = this.onLoad.bind(this);
+    // this.onLoad = this.onLoad.bind(this);
     this.onLoad();
   }
   onLoad() {
@@ -100,21 +100,33 @@ class AdminPage extends React.Component {
                   console.log(event.target.value);
                   this.state.voted = event.target.value;
                 }}
+                style={{ margin: "6%" }}
               >
                 {
                   (this.items = this.state.candidates.map((item) => (
-                    <Row>
-                      <input
+                    <div style={{ padding: "2%" }} className="border">
+                      <Form.Check
+                        type={"radio"}
+                        name={"selected"}
+                        label={item.candidate}
+                        value={item.candidate}
+                      />
+                      {/* <input
                         type="radio"
                         value={item.candidate}
                         name="selected"
                       />
-                      {item.candidate}
-                    </Row>
+                      {item.candidate} */}
+                    </div>
                   )))
                 }
               </div>
-              <Button type="submit">Vote</Button>
+              <Button
+                style={{ paddingLeft: "3%", paddingRight: "3%" }}
+                type="submit"
+              >
+                Vote
+              </Button>
             </Form>
             <div id="message"></div>
           </Container>
@@ -123,73 +135,4 @@ class AdminPage extends React.Component {
     );
   }
 }
-export default AdminPage;
-
-// import React from "react";
-// import {
-//   Col,
-//   Form,
-//   ListGroup,
-//   Row,
-//   Navbar,
-//   Button,
-//   Card,
-//   Nav,
-// } from "react-bootstrap";
-// const candidates = ["a", "b", "c", "d"];
-// function UserPage(props) {
-
-//     onLoad() {
-//         const history_store = this.props.history;
-//         // e.preventDefault();
-//         var self = this;
-//         axios
-//           .get("http://localhost:4000/api/get_candidates", {})
-//           .then(function (response) {
-//             self.setState({
-//               candidates: response.data,
-//             });
-
-//             // self.state.candidates = response.data;
-//             console.log("candidatessss2", self.state.candidates);
-//             // self.setState({ candidates:  });
-//             // this.state.candidates = response.data;
-//           })
-//           .catch(function (error) {
-//             console.log(error);
-//           });
-//       }
-//   return (
-//     <div style={{ alignItems: "center" }}>
-//       <Navbar className="navbar">
-//         <Nav className="mr-auto">
-//           <Navbar.Brand style={{ color: "white" }}>Voting App</Navbar.Brand>
-//         </Nav>
-//         <Nav style={{ float: "right", alignSelf: "right" }}>
-//           <Button>Logout</Button>
-//         </Nav>
-//       </Navbar>
-//       <Card style={{ width: "70%", float: "center" }}>
-//         <Card.Header>
-//           <h1>Welcome !!</h1>
-//         </Card.Header>
-//         <Form>
-//           <Card.Body>
-//             {candidates.map((value, index) => (
-//               <ListGroup.Item key={index} as={Row}>
-//                 <Col sm={8}>{value}</Col>
-//                 <Col sm={4}>
-//                   <Form.Control type="radio" />
-//                 </Col>
-//               </ListGroup.Item>
-//             ))}
-//           </Card.Body>
-//           <Card.Footer>
-//             <Button type="submit">Submit Vote</Button>
-//           </Card.Footer>
-//         </Form>
-//       </Card>
-//     </div>
-//   );
-// }
-// export default UserPage;
+export default UserPage;

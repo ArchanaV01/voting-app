@@ -32,10 +32,15 @@ router.post("/signin", async (req, res, next) => {
         user,
       });
     } else {
-      throw new Error();
+      throw new Error("Invalid Username/Password");
     }
   } catch (err) {
-    return next({ status: 400, message: "Invalid Username/Password" });
+    return res.status(400).json({
+      message: "Invalid Username/Password",
+    });
+    // console.log(err);
+    // return next({ status: 400, message: "Invalid Username/Password" });
+    // return err;
   }
 });
 
